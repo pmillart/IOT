@@ -1,0 +1,31 @@
+# Name the components on this agent
+IOTagent.channels = chanel-oracle-hvac
+IOTagent.sources = source-IoTCS-http
+IOTagent.sinks = hdfs-sink
+
+# Describe/configure the source
+
+IOTagent.sources.source-IoTCS-http.type = http
+IOTagent.sources.source-IoTCS-http.port = 1234
+IOTagent.sources.source-IoTCS-http.handler = org.apache.flume.sink.solr.morphline.BlobHandler
+#IOTagent.sources.source-IoTCS-http.handler = org.apache.flume.source.http.JSONHandler
+
+# properties of hdfs-sink
+IOTagent.sinks.hdfs-sink.type = hdfs
+IOTagent.sinks.hdfs-sink.hdfs.path = hdfs://localhost/user/oracle/flume/IoTCS
+IOTagent.sinks.hdfs-sink.hdfs.fileType = DataStream
+IOTagent.sinks.hdfs-sink.hdfs.batchSize = 1000
+IOTagent.sinks.hdfs-sink.hdfs.rollInterval = 300
+IOTagent.sinks.hdfs-sink.hdfs.rollCount = 100
+IOTagent.sinks.hdfs-sink.hdfs.rollSize = 51200000
+
+# Use a channel which buffers events in memory
+
+IOTagent.channels.chanel-oracle-hvac.type = memory
+IOTagent.channels.chanel-oracle-hvac.capacity = 10000
+IOTagent.channels.chanel-oracle-hvac.transactionCapacity = 10000
+IOTagent.channels.chanel-oracle-hvac.byteCapacity = 50000000
+
+# Bind the source and sink to the channel
+IOTagent.sources.source-IoTCS-http.channels = chanel-oracle-hvac
+IOTagent.sinks.hdfs-sink.channel = chanel-oracle-hvac
