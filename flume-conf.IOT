@@ -4,6 +4,7 @@ IOTagent.sources = source-IoTCS-http
 IOTagent.sinks = hdfs-sink
 
 # Describe/configure the source
+# for fun
 
 IOTagent.sources.source-IoTCS-http.type = http
 IOTagent.sources.source-IoTCS-http.port = 1234
